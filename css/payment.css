@@ -1,0 +1,55 @@
+/* أنماط إضافية */
+.advanced-payment {
+    padding: 2rem 0;
+}
+
+.payment-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 3px solid #ddd;
+    color: #666;
+}
+
+.step.active {
+    color: #37D4CF;
+    border-color: #37D4CF;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.payment-method-card {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method-card.active {
+    border-color: #37D4CF;
+    box-shadow: 0 4px 15px rgba(55, 212, 207, 0.15);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
