@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - أثاث وديكور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* Added transition for category icons */
+        .category-icon {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--primary-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+        
+        .category-item:hover .category-icon::before {
+            height: 100%;
+        }
+        
+        .category-icon i {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item:hover .category-icon i {
+            color: white;
+            transform: scale(1.15);
+        }
+        
+        /* Original styles preserved */
+        :root {
+            --primary-color: #3BE5DB;
+            --secondary-color: #2a9d95;
+            --dark-color: #242424;
+            --light-color: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Arial', sans-serif;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            background-color: #fafafa;
+        }
+        
+        .main-content {
+            flex: initial;
+            padding: 20px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
+            color: var(--primary-color);
+            line-height: 1.2;
+            text-decoration: none;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+            color: var(--dark-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .shop-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(59, 229, 219, 0.3);
+        }
+        
+        .shop-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(59, 229, 219, 0.4);
+        }
+        
+        .hero {
+            margin-top: 80px;
+            position: relative;
+        }
+        
+        .swiper {
+            width: 100%;
+            height: 85vh;
+            min-height: 500px;
+            overflow: hidden;
+        }
+        
+        .swiper-slide {
+            position: relative;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            color: white;
+            text-align: right;
+            max-width: 600px;
+            z-index: 10;
+        }
+        
+        .slide-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+        
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 992px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .slide-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .slide-content p {
+                font-size: 1.1rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+        }
+        
+        .rent {
+            background: #3BE5DB;
+            color: black;
+            padding: 30px 25px;
+            border-radius: 25px;
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .rent:hover {
+            transform: scale(1.05);
+        }
+        
+        .swiper {
+            width: 100%;
+            height: 85vh;
+            min-height: 500px;
+            overflow: hidden;
+        }
+        
+        .swiper-slide {
+            position: relative;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .caption {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            bottom: 15%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .swiper {
+                height: 70vh;
+                min-height: 400px;
+            }
+            
+            .slide-content {
+                right: 5%;
+                left: 5%;
+                text-align: center;
+            }
+            
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .category-icon {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+            }
+        }
+        
+        footer {
+  display: flex;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  width: 100%;
+  margin-top: auto;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.footer-section {
+  padding: 10px;
+  min-width: 250px;
+}
+
+.footer-section h4 {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section h4::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background: var(--dark-color);
+  border-radius: 2px;
+}
+
+.footer-section a {
+  color: var(--dark-color);
+  text-decoration: none;
+  display: flex;
+  margin: 12px 0;
+  align-items: center;
+  transition: var(--transition);
+  gap: 10px;
+  font-weight: 600;
+}
+
+.footer-section a:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+.footer-section p {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--dark-color);
+  justify-content: center;
+}
+
+.footer-bottom {
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+        
+        .categories-section {
+            padding: 50px 20px;
+            background: #F8F9FA;
+            position: relative;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+    color: var(--dark-color);
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .category-item {
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .category-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-icon {
+            background: #fff;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .category-icon i {
+            font-size: 2rem;
+            color: #3BE5DB;
+        }
+        
+        .category-item span {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .category-item:hover span {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .category-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .category-icon i {
+                font-size: 1.5rem;
+            }
+            
+            
+        }
+        
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 80px 5%;
+        }
+        
+        .feature-card {
+            background: linear-gradient(to right, #eee, #fff);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #48E9E4;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .shop-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .swiper {
+                height: 60vh;
+            }
+            
+            .slide-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .slide-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .category-icon {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .category-icon i {
+                font-size: 2rem;
+            }
+            
+            .category-item span {
+                font-size: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 60px 5%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            position: relative;
+            margin-top: -20px;
+            border-top: 0.6px solid black;
+            bottom: 0;
+            font-size: 0.9rem;
+            color: darkslategray;
+        }
+    </style>
+</head>
+<body>
+   <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <h1>TAZARINE</h1>
+                <div class="logo-subtitle">HOME & DECO</div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">منتجاتنا</a></li>
+                    <li><a href="#">المعرض</a></li>
+                    <li><a href="#">من نحن</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+            
+            <button class="shop-btn">
+                <i class="fas fa-shopping-cart"></i><a href="products.html" style="text-decoration: none; color: white; padding: 1px;">تصفح المنتجات</a>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="أثاث مودرن">
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h2>ديكورات فريدة لعالم أنيق</h2>
+                        <p>اكتشف تشكيلتنا المتميزة من الأثاث والديكور المصممة بعناية لتناسب ذوقك الرفيع</p>
+                        <button class="shop-btn">اكتشف الآن</button>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="أثاث كلاسيكي">
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h2>تصميمات أنيقة تعكس شخصيتك</h2>
+                        <p>مجموعة متنوعة من التصميمات الكلاسيكية والعصرية التي تلبي جميع الأذواق</p>
+                        <button class="shop-btn">اكتشف الآن</button>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="ديكورات مكتبية">
+                    <div class="overlay"></div>
+                    <div class="slide-content">
+                        <h2>حلول مبتكرة لمساحات العمل</h2>
+                        <p>أثاث مريح وعملي لمكاتب أنيقة ومنتجة تلهم الإبداع</p>
+                        <button class="shop-btn">اكتشف الآن</button>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+  <section class="categories-section">
+        <h2 class="section-title">اكتشف فئاتنا</h2>
+        <div class="categories-grid">
+            <a href="office.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <span>المكاتب</span>
+            </a>
+            
+            <a href="living-room.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-couch"></i>
+                </div>
+                <span>الصالونات</span>
+            </a>
+
+            <a href="bedroom.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <span>غرف النوم</span>
+            </a>
+
+            <a href="kitchen.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <span>المطابخ</span>
+            </a>
+
+            <a href="lighting.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <span>الإضاءة</span>
+            </a>
+
+            <a href="decor.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-paint-roller"></i>
+                </div>
+                <span>الديكور</span>
+            </a>
+
+            <a href="outdoor.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <span>الخارجية</span>
+            </a>
+        </div>
+    </section>
+
+<section class="features">
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>شحن سريع</h3>
+            <p>توصيل خلال 24~72 ساعة</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>ضمان 3 اشهر</h3>
+            <p>ضمان شامل على جميع المنتجات</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-credit-card"></i>
+            <h3>دفع آمن</h3>
+            <p>أنظمة دفع إلكتروني محمية</p>
+        </div>
+    </section>
+
+      <footer>
+      <div class="footer-section">
+        <h4>روابط سريعة</h4>
+        <a href="about.html"><i class="fas fa-info-circle"></i> عن المتجر</a>
+        <a href="return-policy.html"><i class="fas fa-exchange-alt"></i> سياسة الإرجاع</a>
+        <a href="shipping.html"><i class="fas fa-truck"></i> سياسة الشحن</a>
+        <a href="https://maps.app.goo.gl/2WgPGdDQsHjka9847"><i class ="fa fa-map-location"></i>الموقع</a>
+      </div>
+      <div class="footer-section">
+        <h4>وسائل التواصل</h4>
+        <a href="https://www.facebook.com/TAZARINE" target="_blank"><i class="fab fa-facebook"></i> فيسبوك</a>
+        <a href="https://www.instagram.com/TAZARINE" target="_blank"><i class="fab fa-instagram"></i> إنستغرام</a>
+        <a href="https://wa.me/212700720490" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a>
+      </div>
+      <div class="footer-section">
+        <h4>اتصل بنا</h4>
+        <p><i class="fas fa-phone"></i> 0700720490</p>
+        <p><i class="fas fa-envelope"></i> tazarinedeco@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> القنيطرة، المغرب</p>
+      </div>
+      <div class="footer-bottom">
+        <p>tazarine home&deco 2025 - جميع الحقوق محفوظة ©</p>
+      </div>
+    </footer>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+ <script>
+     // Initialize Swiper
+     var swiper = new Swiper(".mySwiper", {
+         effect: "fade",
+         grabCursor: true,
+         centeredSlides: true,
+         slidesPerView: 1,
+         loop: true,
+         autoplay: {
+             delay: 5000,
+             disableOnInteraction: false,
+         },
+         pagination: {
+             el: ".swiper-pagination",
+             clickable: true,
+             dynamicBullets: true,
+         },
+     });
+     
+     // Sticky header
+     window.addEventListener('scroll', function() {
+         const header = document.querySelector('header');
+         header.classList.toggle('sticky', window.scrollY > 0);
+     });
+     
+     // Add smooth scrolling for anchor links
+     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+         anchor.addEventListener('click', function(e) {
+             e.preventDefault();
+             document.querySelector(this.getAttribute('href')).scrollIntoView({
+                 behavior: 'smooth'
+             });
+         });
+     });
+ </script>
+</body>
+</html>

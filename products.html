@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - طاولات مكتبية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px 5px;
+            text-align: center;
+            width: 100%;
+            justify-items: center;
+        }
+        /* تنسيق الهيدر المعدل */
+        .header-top {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+
+        /* تحسينات القائمة الجانبية */
+        .menu-toggle {
+            display: none;
+            background: #3BE5DB;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: #000;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #EBEBEB;
+            box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            z-index: 999;
+            padding-top: 60px;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a:hover {
+            background: #f5f5f5;
+        }
+
+        /* تنسيقات الشاشات الكبيرة */
+        .desktop-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.desktop-nav a {
+  color: #38E0D8;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #eee ;
+  background: #1C1C1C;
+  transition: 0.3s;
+}
+
+.desktop-nav a:hover {
+  background: #3BE5DB;
+  color: #1a1a1a;
+}
+
+/* تنسيق قائمة الجوال */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #21C4E6;
+  font-size: 2rem;
+  padding: 2px 20px;
+  border-radius: 50px;
+  border: 2px solid #eee ;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  justify-items: center;
+  border-radius: 0 0 0 50px;
+  height: 80%;
+  background: #eee;
+  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.4);
+  transition: 0.3s;
+  padding-top: 60px;
+  padding-inline: 20px;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  right: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.nav-links {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #2FF6D4;
+  background: #333;
+  text-decoration: none;
+  padding: 20px;
+  padding-inline: 60px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  background: #f5f5f5;
+}
+
+/* استعلامات الوسائط */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .sidebar {
+    display: none !important;
+  }
+}
+
+        /* باقي التنسيقات */
+              .products-section {
+  padding: 50px 20px;
+  background: #F8F9FA;
+  width: 100%;
+  border-top: 2px solid #3BE5DB;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  max-width: 100%;
+  width: 98%;
+  margin: 0 auto;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.product-info {
+  padding-inline: 18px;
+  padding-bottom: 10px;
+}
+
+.product-title {
+  color: #313131;
+  margin-block: 5px 10px;
+  font-size: 1.1rem;
+  line-height: 0.4;
+}
+
+.product-price {
+  color: #3BE5DB;
+  font-size: 1.55rem;
+  font-weight: 900;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 2px;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-to-cart {
+  background: #3BE5DB;
+  color: #1a202c;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  margin-inline: 20px;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-to-cart i {
+  font-size: 1.1rem;
+}
+
+.add-to-cart:hover {
+  background: #2ac9c0;
+  transform: scale(0.98);
+}
+
+/* صفحة تفاصيل المنتج */
+.product-detail-page {
+  display: none;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-button {
+  background: #3BE5DB;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.product-gallery {
+  position: relative;
+}
+
+.main-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  border-radius: 15px;
+  padding: 5px;
+  background: white;
+}
+
+.thumbnails-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.thumbnail.active {
+  border-color: #3BE5DB;
+}
+
+.product-info-detail {
+  padding: 10px;
+}
+
+.product-info-detail h1 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+}
+
+.product-price-detail {
+  color: #3BE5DB;
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: #444;
+}
+
+.product-specs {
+  margin-top: 20px;
+}
+
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f8f9fa;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.related-products {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+}
+
+.related-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* التجاوب */
+@media (max-width: 768px) {
+  .products-section {
+    padding: 40px 15px;
+  }
+  
+  .product-image {
+    height: 180px;
+  }
+  
+  .product-title {
+    font-size: 1rem;
+  }
+  
+  .product-price {
+    font-size: 1.1rem;
+  }
+  
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-image {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .product-card {
+    margin: 0;
+    max-width: 100%;
+  }
+  
+  .product-image {
+    height: 160px;
+  }
+  
+  .product-title {
+    font-size: 0.9rem;
+  }
+  
+  .product-price {
+    font-size: 1rem;
+  }
+  
+  .add-to-cart {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .main-image {
+    height: 250px;
+  }
+
+  .thumbnails-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 10px;
+  }
+  
+  .product-card {
+    margin-bottom: 10px;
+  }
+}
+        
+         footer {
+    display: flex;
+    background-color: #3CDDD3;
+    color: white;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    width: 100%;
+    margin-top: auto;
+  }
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  height: auto;
+  bottom: 0;
+  border-radius: 10px 10px 0 0;
+}
+  .footer-section {
+    position: relative;
+    width: 80%;
+    padding: 10px;
+    justify-items: right;
+    justify-content: space-between;
+  }
+.footer-section h4 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.footer-section a {
+  color: #FFFFFF;
+  text-decoration: none;
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  transition: color 0.3s ease;
+  gap: 10px;
+}
+
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+.footer-section p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}  
+       .footer-bottom {
+    text-align: center;
+    position: relative;
+    margin-top: -20px;
+    border-top: 0.6px solid black;
+    bottom: 0;
+    font-size: 0.9rem;
+    color: darkslategray;
+  }  
+        
+        /* Floating Cart Icon */
+        .floating-cart {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: #3BE5DB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-cart:hover {
+            transform: scale(1.1);
+            background: #2ac9c0;
+        }
+        
+        .floating-cart i {
+            font-size: 24px;
+            color: #1a202c;
+        }
+        
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Only show on mobile/small screens */
+        @media (min-width: 769px) {
+            .floating-cart {
+                display: none;
+            }
+        }
+        
+        /* Notification Styles */
+        .notification {
+            
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3CDDD3;
+            color: white;
+            padding: 15px 25px;
+            border: 1px solid black;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #floatingCartCount {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: #F4F4F4;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;    /* توسيط أفقي */
+    align-items: center;        /* توسيط عمودي */
+    line-height: 22px;          /* تطابق ارتفاع العنصر */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation: pulse 1.5s infinite;
+}
+
+/* Animation for cart count */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+    </style>
+</head>
+<body>
+    <header>
+  <div class="header-top">
+    <div class="logo">
+      <h2>TAZARINE</h2>
+      <span class="logo-subtitle">HOME&DECO</span>
+    </div>
+    
+    <!-- قائمة سطح المكتب -->
+    <nav class="desktop-nav">
+      <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة <span class="cart-counter"></span></a>
+      <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+    </nav>
+    <!-- زر القائمة الجانبية -->
+    <button class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  
+  <!-- القائمة الجانبية -->
+  <div class="sidebar">
+    <button class="close-btn">&times;</button>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+      <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة <span class="cart-counter"></span></a>
+      <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+    </nav>
+  </div>
+</header>
+ <!-- Floating Cart Icon -->
+ <div class="floating-cart" onclick="window.location.href='cart.html'">
+   <i class="fas fa-shopping-cart"></i>
+   <span class="cart-count" id="floatingCartCount">0</span>
+ </div>
+    <div class="main-content">
+        <!-- صفحة المنتجات -->
+        <div class="products-page">
+            <div class="office-header">
+                <h1>طاولات مكتبية احترافية</h1>
+                <p>اكتشف مجموعتنا المميزة من حلول العمل الفعالة</p>
+            </div>
+            
+            <section class="products-section">
+                <div class="products-grid" id="productsContainer"></div>
+            </section>
+        </div>
+
+        <!-- صفحة التفاصيل -->
+        <div class="product-detail-page" id="productDetailPage">
+            <button class="back-button" id="backButton">
+                <i class="fas fa-arrow-left"></i> الرجوع
+            </button>
+            
+            <div class="detail-grid" id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <footer>
+      <div class="footer-section">
+        <h4>روابط سريعة</h4>
+        <a href="about.html">عن المتجر</a>
+        <a href="return-policy.html">سياسة الإرجاع</a>
+      </div>
+      <div class="footer-section">
+        <h4>اتصل بنا</h4>
+        <p><i class="fas fa-phone"></i> 0700720490</p>
+        <p><i class="fas fa-envelope"></i>tazarinedeco@gmail.com</p>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <p>tazarine home&deco 2025 - All rights reserved © </p>
+    </div>
+    
+    <!-- Notification element -->
+    <div class="notification" id="notification"></div>
+    
+    <!-- Load pp.js first to render products -->
+    <script src="./js/pp.js"></script>
+    <script src="./js/pd.js"></script> 
+    
+    <script type="module">
+        // Mock cart.js - In a real app this would be a separate file
+        const cart = {
+            items: JSON.parse(localStorage.getItem('cart')) || [],
+            
+            save() {
+                localStorage.setItem('cart', JSON.stringify(this.items));
+            },
+            
+            add(product) {
+                const existingItem = this.items.find(item => item.id === product.id);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.items.push({ ...product, quantity: 1 });
+                }
+                this.save();
+                this.updateUI();
+            },
+            
+            remove(id) {
+                this.items = this.items.filter(item => item.id !== id);
+                this.save();
+                this.updateUI();
+            },
+            
+            updateQuantity(id, change) {
+                const item = this.items.find(item => item.id === id);
+                if (item) {
+                    item.quantity = Math.max(1, item.quantity + change);
+                    this.save();
+                    this.updateUI();
+                }
+            },
+            
+            getTotal() {
+                return this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            },
+            
+            getTotalItems() {
+                return this.items.reduce((total, item) => total + item.quantity, 0);
+            },
+            
+            updateUI() {
+                this.updateCartIcon();
+            },
+            
+            updateCartIcon() {
+                const totalItems = this.getTotalItems();
+                // Update cart counters
+                document.querySelectorAll('.cart-counter').forEach(counter => {
+                    counter.textContent = totalItems;
+                });
+                // Update floating cart
+                document.getElementById('floatingCartCount').textContent = totalItems;
+            },
+            
+            showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            },
+            
+            init() {
+                this.updateUI();
+            }
+        };
+        
+        // Make cart globally accessible
+        window.cart = cart;
+        
+        // Initialize the cart
+        cart.init();
+        
+        // Override the addToCart function to use cart.js
+        window.addToCart = function(productId) {
+            // Find the product
+            const product = window.products.find(p => p.id == productId);
+            
+            if (product) {
+                // Add the product to cart using cart.js
+                cart.add({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images[0]
+                });
+                
+                // Show notification
+                cart.showNotification(`تمت إضافة ${product.name} إلى السلة ✔️`);
+            }
+        };
+        
+        // Sidebar menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const closeBtn = document.querySelector('.close-btn');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !e.target.closest('.menu-toggle')) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        // Back button functionality
+        document.getElementById('backButton').addEventListener('click', () => {
+            window.location.hash = '';
+        });
+        
+        // Filter products by category
+        function filterProductsByCategory(category) {
+            const productsContainer = document.getElementById('productsContainer');
+            if (!productsContainer || !window.products) return;
+            
+            const filteredProducts = window.products.filter(
+                product => product.category === category
+            );
+            
+            if (filteredProducts.length === 0) {
+                productsContainer.innerHTML = `
+                    <div class="no-products">
+                        <i class="fas fa-table" style="font-size: 3rem; color: #3BE5DB; margin-bottom: 20px;"></i>
+                        <h2>لا توجد طاولات متاحة حالياً</h2>
+                        <p>سنقوم بإضافة المزيد من الطاولات قريباً</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            productsContainer.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" data-id="${product.id}">
+                    <img src="${product.images[0]}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <span class="product-price">${product.price} درهم</span>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="${product.id}">
+                                <i class="fas fa-cart-plus"></i> إضافة للسلة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add event listeners to the new products
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.add-to-cart')) {
+                        const id = card.dataset.id;
+                        window.location.hash = `#product/${id}`;
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addToCart(button.dataset.id);
+                });
+            });
+        }
+        
+        // Apply filtering on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            filterProductsByCategory('طاولات');
+        });
+    </script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</body>
+</html>

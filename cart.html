@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - سلة التسوق</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #3BE5DB;
+            --primary-dark: #2ac9c0;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #e0e0e0;
+            --text: #333;
+            --danger: #e74c3c;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        .header-top {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--dark);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+            color: #fff;
+        }
+
+        /* Desktop navigation */
+        .desktop-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .desktop-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--dark);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .desktop-nav a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(59, 229, 219, 0.3);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.8rem;
+            padding: 5px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(59, 229, 219, 0.1);
+        }
+
+        /* Sidebar menu */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: var(--light);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            transition: 0.4s;
+            z-index: 999;
+            padding-top: 80px;
+            padding-inline: 20px;
+            border-radius: 0 0 0 30px;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            background: rgba(59, 229, 219, 0.1);
+            border: 1px solid rgba(59, 229, 219, 0.2);
+        }
+
+        .nav-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateX(-5px);
+        }
+
+        .nav-links a i {
+            font-size: 1.2rem;
+        }
+
+        /* Cart section */
+        .cart-section {
+            max-width: 100%;
+            margin: 40px auto;
+            width: 98%;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 50%;
+        }
+
+        .cart-items {
+            padding: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            background: var(--light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-image {
+            width: 140px;
+            height: 140px;
+            margin-left: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .item-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .item-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border-radius: 30px;
+            padding: 5px;
+            width: fit-content;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border: none;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: transparent;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 30px;
+        }
+
+        .remove-item {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-item:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .item-total {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--dark);
+            background: rgba(59, 229, 219, 0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 30px;
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            color: var(--gray);
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
+
+        .empty-cart h3 {
+            color: var(--text);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .empty-cart .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 229, 219, 0.3);
+        }
+
+        .empty-cart .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 229, 219, 0.4);
+        }
+
+        /* Cart summary */
+        .cart-summary {
+            padding: 30px;
+            background: var(--light);
+            border-top: 2px solid var(--gray);
+        }
+
+        .summary-details {
+            margin-bottom: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .summary-row.total {
+            border-bottom: none;
+            font-weight: 800;
+            font-size: 1.4rem;
+            padding-top: 20px;
+            color: var(--dark);
+        }
+
+        .checkout-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .continue-shopping {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: white;
+            color: var(--dark);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .continue-shopping:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 229, 219, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 229, 219, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border-radius: 30px 30px 0 0;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section {
+            padding: 15px;
+        }
+
+        .footer-section h4 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+        }
+
+        .footer-section a {
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            margin: 15px 0;
+            align-items: center;
+            transition: all 0.3s;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .footer-section a:hover {
+            color: #000;
+            transform: translateX(5px);
+        }
+
+        .footer-section p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .cart-item {
+                flex-wrap: wrap;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: 200px;
+                margin: 0 0 20px 0;
+            }
+            
+            .item-actions {
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .checkout-actions {
+                flex-direction: column;
+            }
+            
+            .continue-shopping, .cta-button {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                padding: 20px;
+            }
+            
+            .item-title {
+                font-size: 1.3rem;
+            }
+            
+            .item-price {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-top {
+                padding: 1rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.5rem;
+            }
+            
+            .cart-items {
+                padding: 15px;
+            }
+            
+            .cart-item {
+                padding: 20px;
+            }
+            
+            .item-total {
+                min-width: 120px;
+                font-size: 1.2rem;
+                padding: 8px 15px;
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <h2>TAZARINE</h2>
+                <span class="logo-subtitle">HOME&DECO</span>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar">
+            <button class="close-btn">&times;</button>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="cart-section">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-cart"></i>
+                سلة التسوق
+            </h2>
+            
+            <div class="cart-items" id="cartContainer">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>المجموع الجزئي:</span>
+                        <span class="subtotal">0.00 درهم</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>رسوم الشحن:</span>
+                        <span class="shipping">50.00 درهم</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>المجموع الكلي:</span>
+                        <span class="grand-total">0.00 درهم</span>
+                    </div>
+                </div>
+                <div class="checkout-actions">
+                    <a href="products.html" class="continue-shopping">
+                        <i class="fas fa-arrow-right"></i> متابعة التسوق
+                    </a>
+                    <a href="checkout.html" class="cta-button">
+                        <i class="fas fa-credit-card"></i> إتمام الشراء
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <footer>
+    <div class="footer-section">
+        <h4>روابط سريعة</h4>
+        <a href="about.html">عن المتجر</a>
+        <a href="return-policy.html">سياسة الإرجاع</a>
+    </div>
+    <div class="footer-section">
+        <h4>اتصل بنا</h4>
+        <p><i class="fas fa-phone"></i> 0700720490</p>
+        <p><i class="fas fa-envelope"></i>tazarinedeco@gmail.com</p>
+    </div>
+</footer>
+    <!-- Import JavaScript files -->
+    <script type="module" src="./js/pd.js"></script>
+    <script type="module" src="./js/pp.js"></script> 
+</body>
+</html>
